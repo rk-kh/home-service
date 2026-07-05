@@ -12,7 +12,12 @@ const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://rashiddb:rashiddb.0307@cluster1.w3uolqq.mongodb.net/Homeservice';
+const MONGO_URI = process.env.MONGODB_URI;
+
+if (!MONGO_URI) {
+  console.error('❌ MONGODB_URI is not set. Add it to your environment or .env file.');
+  process.exit(1);
+}
 
 const connectDB = async () => {
   try {
