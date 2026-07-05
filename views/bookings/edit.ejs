@@ -1,0 +1,82 @@
+<%- include('../partials/header') %>
+
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+
+      <div class="d-flex align-items-center mb-4">
+        <a href="/bookings" class="btn btn-sm btn-outline-secondary me-3">
+          <i class="bi bi-arrow-left"></i> Back
+        </a>
+        <h4 class="fw-bold mb-0">Edit Booking</h4>
+      </div>
+
+      <div class="card border-0 shadow-sm">
+        <div class="card-body p-4">
+
+          <!-- Error Message -->
+          <% if (error) { %>
+          <div class="alert alert-danger small">
+            <i class="bi bi-exclamation-triangle me-1"></i> <%= error %>
+          </div>
+          <% } %>
+
+          <!-- Form posts to the edit route with booking ID -->
+          <form action="/bookings/edit/<%= booking._id %>" method="POST">
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Full Name</label>
+              <!-- value= fills the form with existing data -->
+              <input type="text" name="name" class="form-control" value="<%= booking.name %>" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Email</label>
+              <input type="email" name="email" class="form-control" value="<%= booking.email %>" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Phone Number</label>
+              <input type="text" name="phone" class="form-control" value="<%= booking.phone %>" required>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Select Service</label>
+              <select name="service" class="form-select" required>
+                <% services.forEach(function(s) { %>
+                  <!-- selected= highlights the currently chosen service -->
+                  <option value="<%= s.name %>" <%= booking.service === s.name ? 'selected' : '' %>>
+                    <%= s.name %>
+                  </option>
+                <% }) %>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label fw-medium">Address</label>
+              <textarea name="address" class="form-control" rows="2" required><%= booking.address %></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label class="form-label fw-medium">Status</label>
+              <select name="status" class="form-select">
+                <option value="Pending"   <%= booking.status === 'Pending'   ? 'selected' : '' %>>Pending</option>
+                <option value="Confirmed" <%= booking.status === 'Confirmed' ? 'selected' : '' %>>Confirmed</option>
+                <option value="Completed" <%= booking.status === 'Completed' ? 'selected' : '' %>>Completed</option>
+                <option value="Cancelled" <%= booking.status === 'Cancelled' ? 'selected' : '' %>>Cancelled</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-2 fw-semibold">
+              <i class="bi bi-save me-1"></i> Save Changes
+            </button>
+
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

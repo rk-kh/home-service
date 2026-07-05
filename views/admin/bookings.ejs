@@ -1,0 +1,39 @@
+<%- include('../partials/header', { title: title }) %>
+
+<div class="container mt-4">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>All Bookings</h2>
+    <a href="/admin" class="btn btn-outline-secondary btn-sm">Back to Dashboard</a>
+  </div>
+
+  <div class="card shadow-sm rounded-4">
+    <div class="card-body p-3">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-light">
+            <tr>
+              <th>Customer</th>
+              <th>Email</th>
+              <th>Service</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% bookings.forEach(function(b){ %>
+              <tr>
+                <td><%= b.name %> <% if (b.user && b.user.name) { %> <small class="text-muted">(<%= b.user.name %>)</small> <% } %></td>
+                <td><%= b.email %></td>
+                <td><%= b.service %></td>
+                <td><span class="status-badge status-<%= b.status.toLowerCase() %>"><%= b.status %></span></td>
+                <td><%= new Date(b.createdAt).toLocaleString('en-GB') %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
