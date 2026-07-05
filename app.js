@@ -14,12 +14,12 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 const MONGO_URI = process.env.MONGODB_URI;
 
-if (!MONGO_URI) {
-  console.error('❌ MONGODB_URI is not set. Add it to your environment or .env file.');
-  process.exit(1);
-}
-
 const connectDB = async () => {
+  if (!MONGO_URI) {
+    console.warn('⚠️ MONGODB_URI is not set. Skipping database connection for now.');
+    return;
+  }
+
   try {
     await mongoose.connect(MONGO_URI, {
       serverSelectionTimeoutMS: 5000,
@@ -27,7 +27,6 @@ const connectDB = async () => {
     console.log('✅MongoDB connected successfully');
   } catch (err) {
     console.error('❌MongoDB connection failed:', err.message);
-    process.exit(1);
   }
 };
 
